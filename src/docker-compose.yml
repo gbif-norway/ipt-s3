@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  ipt_service:
+    build: .
+    image: michaltorma/ipt-s3:latest
+    platform: linux/amd64
