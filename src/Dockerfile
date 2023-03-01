@@ -1,4 +1,4 @@
-FROM gbif/ipt:2.6.3
+FROM gbif/ipt:2.7.2
 
 RUN apt-get update &&\
     apt-get install s3fs s4cmd cron rsync -y
