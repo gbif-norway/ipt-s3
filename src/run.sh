@@ -10,9 +10,9 @@ s4cmd mb s3://$S3_BUCKET_NAME --endpoint-url $S3_HOST
 set -e
 mkdir -p /root/s3data/ipt
 s3fs $S3_BUCKET_NAME /root/s3data/ipt -o passwd_file=/root/passwd-s3fs,use_path_request_style,url=$S3_HOST
-# echo "Start copying"
-# rsync -avzWS /root/s3data/ipt/ $IPT_DATA_DIR
-# echo "Copying finished"
+echo "Start copying"
+rsync -avzWS /root/s3data/ipt/ $IPT_DATA_DIR
+echo "Copying finished"
 echo "Start cron"
 cron
 echo "Starting IPT!"
