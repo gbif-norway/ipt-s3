@@ -16,7 +16,7 @@ echo "Copying finished"
 echo "Start cron"
 cron
 echo "Starting IPT!"
-catalina.sh run
+catalina.sh run & 
 echo "IPT started, copying over ojdbc8 driver"
 sleep 25
 cp /root/ojdbc8.jar /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/ojdbc8.jar
