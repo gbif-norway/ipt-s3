@@ -19,6 +19,6 @@ IPT-S3 is a minimal extension of [GBIF](https://www.gbif.org)'s [IPT](https://hu
 
 ## Build image
 ```zsh
-docker build --platform=linux/amd64 -t michaltorma/ipt-s3:latest ./src
-docker build -t gbifnorway/ipt-s3:ojdbc8 ./src
+docker build --platform=linux/amd64 -t michaltorma/ipt-s3:main-ipt ./src
+docker build -t gbifnorway/ipt-s3:main-ipt ./src
 ```
