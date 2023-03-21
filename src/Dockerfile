@@ -6,8 +6,5 @@ RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
   chmod +x $HOME/minio-binaries/mc && \
   export PATH=$PATH:$HOME/minio-binaries/
 COPY run.sh /root/run.sh
-COPY sync.sh /root/sync.sh
 COPY ojdbc8.jar /root/ojdbc8.jar
-RUN printf '%s\n\n' '1 * * * * /root/sync.sh 2>&1' > /etc/cron.d/sync-cron
-RUN crontab /etc/cron.d/sync-cron
 CMD [ "/root/run.sh" ]
