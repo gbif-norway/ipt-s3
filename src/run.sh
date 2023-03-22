@@ -2,8 +2,7 @@
 set -e
 echo "Set up bi-directional mirroring using mc mirror"
 mc alias set sigma2 https://storage.gbif-no.sigma2.no $S3_ACCESS_KEY $S3_SECRET_KEY
-mc mirror --overwrite --watch sigma2/ipt $IPT_DATA_DIR &> /dev/null
-mc mirror --overwrite --watch $IPT_DATA_DIR sigma2/ipt &> /dev/null
+/root/sync.sh
 echo "Starting IPT!"
 catalina.sh run & 
 echo "IPT started, copying over ojdbc8 driver"
