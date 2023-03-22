@@ -6,5 +6,6 @@ RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
   chmod +x $HOME/minio-binaries/mc && \
   export PATH=$PATH:$HOME/minio-binaries/
 COPY run.sh /root/run.sh
+COPY sync.sh /root/sync.sh
 COPY ojdbc8.jar /root/ojdbc8.jar
 CMD [ "/root/run.sh" ]
