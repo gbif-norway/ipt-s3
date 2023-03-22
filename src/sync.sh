@@ -11,6 +11,12 @@ function check_and_copy_bucket() {
       mkdir -p "$IPT_DATA_DIR"
       mc cp --recursive "$BUCKET" "$IPT_DATA_DIR"
     fi
+  else
+    dir_size=$(find "$IPT_DATA_DIR" -mindepth 1 -not -name "lost+found" | wc -l)
+    if [ "$dir_size" -eq 0 ]; then
+      echo "Directory $IPT_DATA_DIR is empty, copying contents from the bucket."
+      mc cp --recursive "$BUCKET" "$IPT_DATA_DIR/.."
+    fi
   fi
 }
 
@@ -28,5 +34,5 @@ function run_command() {
 
 check_and_copy_bucket
 
-run_command "mc mirror --overwrite --watch sigma2/ipt $IPT_DATA_DIR &> /dev/null" &
-run_command "mc mirror --overwrite --watch $IPT_DATA_DIR sigma2/ipt &> /dev/null" &
+run_command "mc mirror --overwrite --watch sigma2/ipt $IPT_DATA_DIR/.. &> /dev/null" &
+run_command "mc mirror --overwrite --watch --remove $IPT_DATA_DIR/.. sigma2/ipt &> /dev/null" &
