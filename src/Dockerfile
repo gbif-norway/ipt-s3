@@ -12,6 +12,4 @@ RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip && \
 COPY rclone.conf /root/.config/rclone/rclone.conf
 COPY run.sh /root/run.sh
 COPY sync.sh /root/sync.sh
-COPY ojdbc8.jar /root/ojdbc8.jar
-# CMD [ "tail", "-f","/dev/null" ]
 CMD [ "/root/run.sh" ]

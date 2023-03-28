@@ -3,6 +3,5 @@ version: '3'
 services:
   ipt_service:
     build: .
-    image: gbifnorway/ipt-s3:main-ipt
+    image: gbifnorway/ipt-s3:corema
     platform: linux/amd64
-    env_file: .env
