@@ -8,7 +8,7 @@ rclone sync --update --verbose --transfers 10 --checkers 10 --contimeout 60s --t
 # ✓ Case 5: Bucket exists and contains old e.g. eml files (because the metadata was updated in the IPT) - the --update flag means the newer eml files in $IPT_DATA_DIR will not get overwritten
 echo "Setup cron sync"
 chmod a+x /root/sync.sh
-printf '%s\n\n' '0 0 * * TUE /root/sync.sh 2>&1' > /etc/cron.d/sync-cron
+printf '%s\n\n' '0 4 * * * /root/sync.sh 2>&1' > /etc/cron.d/sync-cron
 crontab /etc/cron.d/sync-cron
 cron
 echo "Starting IPT!"
