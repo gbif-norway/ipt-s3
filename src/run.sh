@@ -1,7 +1,9 @@
 #!/bin/bash
-echo "Before startup, sync from remote to local"
-rclone sync --update --verbose --transfers 10 --checkers 10 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10 --exclude .~tmp~/ sigma2:$S3_BUCKET_NAME $IPT_DATA_DIR
-echo "Setup cron sync"
+# The rclone sync below syncs from remote to local
+# Run this manually in the container only once if the container is started up with an empty pvc
+# Otherwise, remote should only be used to back up
+# rclone sync --update --verbose --transfers 10 --checkers 10 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10 --exclude .~tmp~/ sigma2:$S3_BUCKET_NAME $IPT_DATA_DIR
+echo "Setup cron sync (from local to remote, for backups), to run every hour"
 chmod a+x /root/sync.sh
 printf '%s\n\n' '1 * * * * /root/sync.sh 2>&1' > /etc/cron.d/sync-cron
 crontab /etc/cron.d/sync-cron
