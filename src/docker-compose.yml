@@ -5,4 +5,3 @@ services:
     build: .
     image: gbifnorway/ipt-s3:main-ipt
     platform: linux/amd64
-    env_file: .env
