@@ -1,6 +1,6 @@
 #!/bin/bash
-echo "Before startup, sync from remote to local"
-rclone sync --update --verbose --transfers 10 --checkers 10 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10 --exclude .~tmp~/ sigma2:$S3_BUCKET_NAME $IPT_DATA_DIR
+# echo "Before startup, sync from remote to local"
+# rclone sync --update --verbose --transfers 10 --checkers 10 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10 --exclude .~tmp~/ sigma2:$S3_BUCKET_NAME $IPT_DATA_DIR
 # ✕ Case 1: Bucket does not exist - it breaks!
 # ✓ Case 2: Bucket exists but is empty - this should never be the case except the first time an IPT is created, and then I think it will have no effect as tomcat has not yet started and the folders won't have been created in $IPT_DATA_DIR
 # ✕ Case 3: Bucket exists but does not contain latest IPT generated publication files - they will get deleted from $IPT_DATA_DIR and it breaks!
