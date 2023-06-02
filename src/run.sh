@@ -1,19 +1,19 @@
 #!/bin/bash
-set -e
-echo $S3_ACCESS_KEY:$S3_SECRET_KEY > /root/passwd-s3fs
-chmod 600 /root/passwd-s3fs
-echo "[default]" > ~/.s3cfg
-echo access_key = $S3_ACCESS_KEY >> ~/.s3cfg
-echo secret_key = $S3_SECRET_KEY >> ~/.s3cfg
-set +e
-s4cmd mb s3://$S3_BUCKET_NAME --endpoint-url $S3_HOST
-set -e
-mkdir -p /root/s3data/ipt
-s3fs $S3_BUCKET_NAME /root/s3data/ipt -o passwd_file=/root/passwd-s3fs,use_path_request_style,url=$S3_HOST
-# echo "Start copying"
-# rsync -avzWS /root/s3data/ipt/ $IPT_DATA_DIR
-# echo "Copying finished"
-echo "Start cron"
-cron
+# The rclone sync below syncs from remote to local
+# Run this manually in the container only once if the container is started up with an empty pvc
+# Otherwise, remote should only be used to back up
+# rclone sync --update --verbose --transfers 10 --checkers 10 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10 --exclude .~tmp~/ sigma2:$S3_BUCKET_NAME $IPT_DATA_DIR
+#echo "Setup cron sync (from local to remote, for backups), to run every hour"
+#chmod a+x /root/sync.sh
+#printf '%s\n\n' '1 * * * * /root/sync.sh 2>&1' > /etc/cron.d/sync-cron
+#crontab /etc/cron.d/sync-cron
+#cron
 echo "Starting IPT!"
-catalina.sh run
+catalina.sh run &
+tomcat_pid=$!
+echo "IPT started, copying over ojdbc8 driver"
+cp /root/ojdbc8.jar /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/ojdbc8.jar
+# rm /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/ojdbc-14.jar
+echo "Soft restarting tomcat with ojdbc driver in place"
+touch /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml
+wait $tomcat_pid
