@@ -6,7 +6,7 @@ services:
     image: gbifnorway/ipt-s3:latest
     platform: linux/amd64
     volumes:
-      - data:/srv/ipt
+      - ./data:/srv/ipt
 
   ipt-sidecar:
     build: ./sidecar
@@ -15,6 +15,6 @@ services:
     env_file:
       - .env
     volumes:
-      - data:/srv/ipt
+      - ./data:/srv/ipt
 
 
