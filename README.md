@@ -3,10 +3,11 @@
 IPT-S3 is a minimal extension of [GBIF](https://www.gbif.org)'s [IPT](https://hub.docker.com/r/gbif/ipt/) image that backs up automatically to an S3 bucket storage.
 
 ## Required environmental variables
-* S3_BUCKET_NAME - name of the bucket. IPT-S3 will try to create the bucket before using it.
-* S3_HOST - host url of the bucket
+* S3_BUCKET_NAME - Name of the bucket. IPT-S3 will try to create the bucket before using it.
+* S3_HOST - Host url of the bucket
 * S3_ACCESS_KEY - Access Key for the bucket
 * S3_SECRET_KEY - Secret Access Key for the bucket
+* S3_ZIP_BUCKET_NAME - Optional. If there are DWCAs which need to regularly be synced to the IPT, this is that bucket name.
 
 ## Build image
 ```zsh
