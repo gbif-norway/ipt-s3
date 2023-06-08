@@ -15,7 +15,7 @@ dir_map=(
 # For each key in the dir_map array
 for zip_file in "${!dir_map[@]}"; do
     # Download the zip file
-    s4cmd get "s3://$S3_ZIP_BUCKET_NAME/$zip_file" "$zip_file"
+    s4cmd get "s3://$S3_ZIP_BUCKET_NAME/$zip_file" "$zip_file" --endpoint-url $S3_HOST
 
     # If the download was successful, unzip the file into the correct directory, overwriting any files with the same name there already
     if [ $? -eq 0 ]; then
