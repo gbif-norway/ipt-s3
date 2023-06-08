@@ -23,14 +23,14 @@ for zip_file in "${!dir_map[@]}"; do
 
         # If the unzip was successful, log to /var/log/unzip.log
         if [ $? -eq 0 ]; then
-            echo "$(date): Successfully unzipped $zip_file to ${dir_map[$zip_file]}" >> /var/log/unzip.log
+            echo "$(date '+%Y-%m-%d %T'): Successfully unzipped $zip_file to ${dir_map[$zip_file]}" >> /var/log/unzip.log
         else
-            echo "$(date): Failed to unzip $zip_file" >> /var/log/unzip.log
+            echo "$(date '+%Y-%m-%d %T'): Failed to unzip $zip_file" >> /var/log/unzip.log
         fi
 
         # Remove the downloaded zip file
         rm "$zip_file"
     else
-        echo "$(date): Failed to download $zip_file" >> /var/log/unzip.log
+        echo "$(date '+%Y-%m-%d %T'): Failed to download $zip_file" >> /var/log/unzip.log
     fi
 done
