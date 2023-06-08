@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}-ipt
-        image: gbifnorway/ipt-sidecar:{{ .Values.containerImageTag }}
+        image: gbifnorway/ipt-s3:{{ .Values.containerImageTag }}
         resources:
           limits:
             memory: 1024Mi
@@ -29,7 +29,7 @@ spec:
         - name: pvc
           mountPath: /srv/ipt/
       - name: {{ .Release.Name }}-ipt-sidecar
-        image: gbifnorway/ipt-s3:{{ .Values.containerImageTag }}
+        image: gbifnorway/ipt-sidecar:{{ .Values.containerImageTag }}
         imagePullPolicy: Always
         env:
           - name: S3_BUCKET_NAME

@@ -1,6 +1,6 @@
 # IPT-S3
 
-IPT-S3 is a minimal extension of [GBIF](https://www.gbif.org)'s [IPT](https://hub.docker.com/r/gbif/ipt/) image that backs up automatically to an S3 bucket storage.
+IPT-S3 is a minimal extension of [GBIF](https://www.gbif.org)'s [IPT](https://hub.docker.com/r/gbif/ipt/) image that backs up automatically to an S3 bucket storage. The image itself only contains extra driver for Oracle database (needed for our MUSIT integration). Secondary sidecar image adds automatic backups to minio bucket (NIRD storage). Sidecar container also runs miscellaneous scripts for individual integrations that don't like to behave nicely on their own and need access to the ipt storage directly (e.g. COREMA).
 
 ## Required environmental variables
 * S3_BUCKET_NAME - Name of the bucket. IPT-S3 will try to create the bucket before using it.
@@ -28,3 +28,9 @@ In our case, to retrieve a particular backup do the following:
 4. Delete (or move) the contents of /srv/ipt so that /srv/ipt is empty
 5. Copy from bucket to the local /srv/ipt: `s4cmd dsync --force --recursive --verbose --sync-check --num-threads=5 s3://$S3_BUCKET_NAME $IPT_DATA_DIR --endpoint-url $S3_HOST`
 6. Reset tomcat: `touch /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml`
+
+## Individual deployments
+### Slovakia
+slovakia.ipt.gbif.no
+`helm upgrade --install slovakia ./helm/ipt-s3`
+pvc: `slovakia-pvc`
