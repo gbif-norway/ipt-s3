@@ -37,3 +37,9 @@ pvc: `slovakia-pvc`
 ### Corema
 corema.ipt.gbif.no
 `helm upgrade --install corema ./helm/ipt-s3 --set zipBucket=ggbn`
+### Tajik
+tajik.ipt.gbif.no
+`helm upgrade --install tajik ./helm/ipt-s3`
+### Armenia
+armenia.ipt.gbif.no
+`helm upgrade --install armenia ./helm/ipt-s3`
