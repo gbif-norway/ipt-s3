@@ -10,7 +10,7 @@ IPT-S3 is a minimal extension of [GBIF](https://www.gbif.org)'s [IPT](https://hu
 * S3_ZIP_BUCKET_NAME - Optional. If there are DWCAs which need to regularly be synced to the IPT, this is that bucket name.
 
 ## Build image
-to build booth ipt image and it's sidecar, from the route of the repo run
+to build both ipt image and its sidecar, from the root of the repo, run:
 ```zsh
 docker compose build
 ```
