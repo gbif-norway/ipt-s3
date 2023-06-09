@@ -1,7 +1,0 @@
-version: '3'
-
-services:
-  ipt_service:
-    build: .
-    image: gbifnorway/ipt-s3:latest
-    platform: linux/amd64

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  ipt:
+    build: ./ipt
+    image: gbifnorway/ipt-s3:latest
+    platform: linux/amd64
+    # Uncomment for local testing
+    # volumes: 
+    #   - ./data:/srv/ipt
+
+  ipt-sidecar:
+    build: ./sidecar
+    image: gbifnorway/ipt-sidecar:latest
+    platform: linux/amd64
+    # Uncomment for local testing
+    # env_file:
+    #   - .env
+    # volumes:
+    #   - ./data:/srv/ipt
+
+

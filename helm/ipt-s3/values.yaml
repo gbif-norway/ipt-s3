@@ -1,0 +1,9 @@
+# Default values for ipt-s3.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+persistentStorage: 1G
+containerImageTag: "latest"
+pvcName: null
+hostName: null #ipt.gbif.no
+zipBucket: null # ggbn
