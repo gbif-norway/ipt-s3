@@ -16,7 +16,8 @@ if [ -z "$S3_ZIP_BUCKET_NAME" ]; then
 else
     echo "Setup cron unzip (from remote, download dwca and unzip to local) every Tuesday at 2pm"
     chmod a+x /root/unzip.sh
-    printf '%s\n\n' '0 14 * * 2 /root/unzip.sh 2>&1' >> /etc/cron.d/cron-jobs
+    # This '*/5 * * * *' is every 5 minutes, for testing purposes
+    printf '%s\n\n' '30 14 * * 2 /root/unzip.sh 2>&1' >> /etc/cron.d/cron-jobs
 fi
 
 crontab /etc/cron.d/cron-jobs
