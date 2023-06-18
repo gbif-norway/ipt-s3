@@ -43,3 +43,6 @@ tajik.ipt.gbif.no
 ### Armenia
 armenia.ipt.gbif.no
 `helm upgrade --install armenia ./helm/ipt-s3`
+### Main IPT
+ipt.gbif.no
+`helm upgrade --install main ./helm/ipt-s3 --set pvcName=ipt-pvc-ipt-main-0,hostName=ipt.gbif.no,persistentStorage=20G`
