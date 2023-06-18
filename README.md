@@ -45,4 +45,5 @@ armenia.ipt.gbif.no
 `helm upgrade --install armenia ./helm/ipt-s3`
 ### Main IPT
 ipt.gbif.no
-`helm upgrade --install main ./helm/ipt-s3 --set pvcName=ipt-pvc-ipt-main-0,hostName=ipt.gbif.no,persistentStorage=20G`
+`helm upgrade --install main ./helm/ipt-s3 --set pvcName=main-pvc,hostName=ipt.gbif.no,persistentStorage=20G`
+# 2023-06-18 - Note the old PVC is called pvcName=ipt-pvc-ipt-main-0, but now we are using a new one called `main-pvc`, because `helm upgrade` did not work, so for the migration it was `helm uninstall ipt-main`, then the above. The old PVC should get deleted at some point.
