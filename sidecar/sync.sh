@@ -6,7 +6,7 @@ echo "$(date '+%Y-%m-%d %T') CONFIG Sync completed succesfully" >> /var/log/sync
 s4cmd dsync --recursive --sync-check --num-threads=3 /srv/ipt/logs s3://$S3_BUCKET_NAME/logs --endpoint-url $S3_HOST && \
 echo "$(date '+%Y-%m-%d %T') LOGS Sync completed succesfully" >> /var/log/sync.log
 
-echo "----- NEW RESOURCES SYNC STARTING - $(date '+%Y-%m-%d - %T')-----" >> /var/log/sync.log
+echo "----- NEW RESOURCES SYNC STARTING - $(date '+%Y-%m-%d - %T') -----" >> /var/log/sync.log
 {
 	base_dir="/srv/ipt/resources"
 	for subdir in "${base_dir}"/*; do
