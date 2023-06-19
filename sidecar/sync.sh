@@ -11,13 +11,13 @@ echo "----- NEW RESOURCES SYNC STARTING - $(date '+%Y-%m-%d - %T') -----" >> /va
 	base_dir="/srv/ipt/resources"
 	for subdir in "${base_dir}"/*; do
 	    if [ -d "$subdir" ]; then
-		suffix="${subdir#$base_dir}"
-		/usr/bin/s4cmd dsync --sync-check "${subdir}" --recursive --num-threads=1 --verbose "s3://$S3_BUCKET_NAME/resources${suffix}" --endpoint-url $S3_HOST
-		exit_status=$?
-		if [ $exit_status -ne 0 ]; then
-		    echo "s4cmd dsync failed for ${subdir} with exit status ${exit_status}" >> /var/log/sync.log 
-		fi
-		sleep 0.1
+            suffix="${subdir#$base_dir}"
+            /usr/bin/s4cmd dsync --sync-check "${subdir}" --recursive --num-threads=1 --verbose "s3://$S3_BUCKET_NAME/resources${suffix}" --endpoint-url $S3_HOST
+            exit_status=$?
+            if [ $exit_status -ne 0 ]; then
+                echo "$(date '+%Y-%m-%d %T') s4cmd dsync failed for ${subdir} with exit status ${exit_status}" >> /var/log/sync.log 
+            fi
+            sleep 0.1
 	    fi
 	done
 } >> /var/log/syncdebug.log 2>&1
