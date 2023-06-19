@@ -50,14 +50,14 @@ spec:
                 name: s3-secret
                 key: s3-secret-key
           - name: S3_ZIP_BUCKET_NAME
-            value: {{ .Values.zipBucket}}
+            value: {{ .Values.zipBucket }}
         resources:
           limits:
-            memory: 256Mi
-            cpu: "0.2"
+            memory: 1024Mi
+            cpu: "1"
           requests:
-            memory: 128Mi
-            cpu: "0.1"
+            memory: 512Mi
+            cpu: "0.5"
         volumeMounts:
         - name: pvc
           mountPath: /srv/ipt/
