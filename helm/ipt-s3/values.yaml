@@ -3,7 +3,12 @@
 # Declare variables to be passed into your templates.
 
 persistentStorage: 1G
-containerImageTag: "latest"
+containerImageTag: latest
 pvcName: null
 hostName: null #ipt.gbif.no
 zipBucket: null # ggbn
+sidecarLimitsMemory: 512Mi
+sidecarLimitsCPU: "0.5"
+sidecarRequestsMemory: 256Mi
+sidecarRequestsCPU: "0.25"
+
