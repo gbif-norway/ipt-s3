@@ -36,7 +36,7 @@ slovakia.ipt.gbif.no
 pvc: `slovakia-pvc`
 ### Corema
 corema.ipt.gbif.no
-`helm upgrade --install corema ./helm/ipt-s3 --set zipBucket=ggbn`
+`helm upgrade --install corema ./helm/ipt-s3 --set zipBucket=ggbn,persistentStorage=2Gi`
 ### Tajik
 tajik.ipt.gbif.no
 `helm upgrade --install tajik ./helm/ipt-s3`
@@ -45,5 +45,5 @@ armenia.ipt.gbif.no
 `helm upgrade --install armenia ./helm/ipt-s3`
 ### Main IPT
 ipt.gbif.no
-`helm upgrade --install main ./helm/ipt-s3 --set pvcName=main-pvc,hostName=ipt.gbif.no,persistentStorage=20G,sidecarLimitsMemory=1024Mi,sidecarLimitsCPU="1",sidecarRequestsMemory=512Mi,sidecarRequestsCPU="0.5"`
-# 2023-06-18 - Note the old PVC is called pvcName=ipt-pvc-ipt-main-0, but now we are using a new one called `main-pvc`, because `helm upgrade` did not work, so for the migration it was `helm uninstall ipt-main`, then the above. The old PVC should get deleted at some point.
+`helm upgrade --install main ./helm/ipt-s3 --set pvcName=main-pvc,hostName=ipt.gbif.no,persistentStorage=20G`
+If there's a problem with this command related to the pv, just delete the deployment and then run it again.

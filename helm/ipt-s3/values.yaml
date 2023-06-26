@@ -11,4 +11,3 @@ sidecarLimitsMemory: 512Mi
 sidecarLimitsCPU: "0.5"
 sidecarRequestsMemory: 256Mi
 sidecarRequestsCPU: "0.25"
-
