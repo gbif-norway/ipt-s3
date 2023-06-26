@@ -6,7 +6,7 @@ persistentStorage: 1G
 containerImageTag: latest
 pvcName: null
 hostName: null #ipt.gbif.no
-zipBucket: null # ggbn
+zipBucket: null
 sidecarLimitsMemory: 512Mi
 sidecarLimitsCPU: "0.5"
 sidecarRequestsMemory: 256Mi
