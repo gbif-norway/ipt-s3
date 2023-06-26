@@ -53,11 +53,11 @@ spec:
             value: {{ .Values.zipBucket }}
         resources:
           limits:
-            memory: {{ .Values.sidecarLimitsMemory }}
-            cpu: {{ .Values.sidecarLimitsCPU }}
+            memory: 512Mi
+            cpu: "0.5"
           requests:
-            memory: {{ .Values.sidecarRequestsMemory }}
-            cpu: {{ .Values.sidecarRequestsCPU }}
+            memory: 256Mi
+            cpu: "0.25"
         volumeMounts:
         - name: pvc
           mountPath: /srv/ipt/

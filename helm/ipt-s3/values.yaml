@@ -7,7 +7,3 @@ containerImageTag: latest
 pvcName: null
 hostName: null #ipt.gbif.no
 zipBucket: null
-sidecarLimitsMemory: 512Mi
-sidecarLimitsCPU: "0.5"
-sidecarRequestsMemory: 256Mi
-sidecarRequestsCPU: "0.25"
