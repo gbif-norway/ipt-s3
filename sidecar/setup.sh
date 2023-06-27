@@ -1,9 +1,9 @@
 #!/bin/bash
-mc alias set sigma2 $S3_HOST $S3_ACCESS_KEY $S3_SECRET_KEY
+/root/minio-binaries/mc alias set sigma2 $S3_HOST $S3_ACCESS_KEY $S3_SECRET_KEY
 
 echo "Create the bucket if it doesn't exist"
 set +e
-mc mb "sigma2/$S3_BUCKET_NAME"
+/root/minio-binaries/mc mb "sigma2/$S3_BUCKET_NAME"
 set -e
 
 # Set environment variables so they are accessible to cron

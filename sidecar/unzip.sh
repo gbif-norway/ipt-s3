@@ -15,7 +15,7 @@ dir_map=(
 # For each key in the dir_map array
 for zip_file in "${!dir_map[@]}"; do
     # Download the zip file
-    mc cp "sigma2/$S3_ZIP_BUCKET_NAME/$zip_file" "$zip_file"
+    /root/minio-binaries/mc cp "sigma2/$S3_ZIP_BUCKET_NAME/$zip_file" "$zip_file"
 
     # If the download was successful, unzip the file into the correct directory, overwriting any files with the same name there already
     if [ $? -eq 0 ]; then
