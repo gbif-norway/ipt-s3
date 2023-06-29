@@ -64,4 +64,4 @@ spec:
       volumes:
       - name: pvc
         persistentVolumeClaim:
-          claimName: {{ default (printf "%s-pvc" .Release.Name) .Values.pvcName }}
+          claimName: {{ default (printf "%s-pvc-retain" .Release.Name) .Values.pvcName }}
