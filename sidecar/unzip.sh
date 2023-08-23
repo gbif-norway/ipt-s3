@@ -3,19 +3,19 @@
 # Define an associative array for mapping zip files to directories
 declare -A dir_map
 dir_map=(
-    ["NHMO-BI.zip"]="/srv/ipt/resources/birds/source/"
-    ["NHMO-DAR.zip"]="/srv/ipt/resources/o_dna_arthropods/source/"
-    ["NHMO-DFH.zip"]="/srv/ipt/resources/o_dna_fish_herptiles/source/"
-    ["O-DFL.zip"]="/srv/ipt/resources/o_dna_fungi_lichens/source/"
-    ["NHMO-DOT.zip"]="/srv/ipt/resources/o_dna_other/source/"
-    ["O-DP.zip"]="/srv/ipt/resources/o_dna_plants/source/"
-    ["NHMO-DMA.zip"]="/srv/ipt/resources/o_mammals/source/"
+    ["NHMO-BI.zip"]="/srv/ipt/resources/birds/sources/"
+    ["NHMO-DAR.zip"]="/srv/ipt/resources/o_dna_arthropods/sources/"
+    ["NHMO-DFH.zip"]="/srv/ipt/resources/o_dna_fish_herptiles/sources/"
+    ["O-DFL.zip"]="/srv/ipt/resources/o_dna_fungi_lichens/sources/"
+    ["NHMO-DOT.zip"]="/srv/ipt/resources/o_dna_other/sources/"
+    ["O-DP.zip"]="/srv/ipt/resources/o_dna_plants/sources/"
+    ["NHMO-DMA.zip"]="/srv/ipt/resources/o_mammals/sources/"
 )
 
 # For each key in the dir_map array
 for zip_file in "${!dir_map[@]}"; do
     # Download the zip file
-    s4cmd get "s3://$S3_ZIP_BUCKET_NAME/$zip_file" "$zip_file" --endpoint-url $S3_HOST
+    /root/minio-binaries/mc cp "sigma2/$S3_ZIP_BUCKET_NAME/$zip_file" "$zip_file"
 
     # If the download was successful, unzip the file into the correct directory, overwriting any files with the same name there already
     if [ $? -eq 0 ]; then
@@ -34,3 +34,4 @@ for zip_file in "${!dir_map[@]}"; do
         echo "$(date '+%Y-%m-%d %T'): Failed to download $zip_file" >> /var/log/unzip.log
     fi
 done
+echo "-----" >> /var/log/unzip.log

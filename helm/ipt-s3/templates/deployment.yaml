@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-ipt
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
@@ -50,18 +52,18 @@ spec:
                 name: s3-secret
                 key: s3-secret-key
           - name: S3_ZIP_BUCKET_NAME
-            value: {{ .Values.zipBucket}}
+            value: {{ .Values.zipBucket }}
         resources:
           limits:
-            memory: 256Mi
-            cpu: "0.2"
+            memory: 512Mi
+            cpu: "0.5"
           requests:
-            memory: 128Mi
-            cpu: "0.1"
+            memory: 256Mi
+            cpu: "0.25"
         volumeMounts:
         - name: pvc
           mountPath: /srv/ipt/
       volumes:
       - name: pvc
         persistentVolumeClaim:
-          claimName: {{ default (printf "%s-pvc" .Release.Name) .Values.pvcName }}
+          claimName: {{ default (printf "%s-pvc-retain" .Release.Name) .Values.pvcName }}

@@ -36,10 +36,14 @@ slovakia.ipt.gbif.no
 pvc: `slovakia-pvc`
 ### Corema
 corema.ipt.gbif.no
-`helm upgrade --install corema ./helm/ipt-s3 --set zipBucket=ggbn`
+`helm upgrade --install corema ./helm/ipt-s3 --set zipBucket="corema-exports/gbif",persistentStorage=2Gi`
 ### Tajik
 tajik.ipt.gbif.no
 `helm upgrade --install tajik ./helm/ipt-s3`
 ### Armenia
 armenia.ipt.gbif.no
 `helm upgrade --install armenia ./helm/ipt-s3`
+### Main IPT
+ipt.gbif.no
+`helm upgrade --install main ./helm/ipt-s3 --set pvcName=main-pvc,hostName=ipt.gbif.no,persistentStorage=20G`
+If there's a problem with this command related to the pv, just delete the deployment and then run it again.
