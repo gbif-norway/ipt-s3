@@ -17,6 +17,7 @@ spec:
       containers:
       - name: {{ .Release.Name }}-ipt
         image: gbifnorway/ipt-s3:{{ .Values.containerImageTag }}
+        imagePullPolicy: Always
         resources:
           limits:
             memory: 1024Mi
