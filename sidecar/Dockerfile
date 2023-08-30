@@ -1,6 +1,6 @@
 FROM debian:stable-slim
 RUN apt update && \
-    apt install -y cron unzip curl
+    apt install -y cron unzip curl screen vim
 RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
   --create-dirs \
   -o /root/minio-binaries/mc && \
