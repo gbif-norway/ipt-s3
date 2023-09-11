@@ -39,7 +39,7 @@ corema.ipt.gbif.no
 `helm upgrade --install corema ./helm/ipt-s3 --set zipBucket="corema-exports/gbif",persistentStorage=2Gi`
 ### Tajik
 tajik.ipt.gbif.no
-`helm upgrade --install tajik ./helm/ipt-s3 --set persistentStorage=2Gi`
+`helm upgrade --install tajik ./helm/ipt-s3 --set persistentStorage=1Gi`
 ### Armenia
 armenia.ipt.gbif.no
 `helm upgrade --install armenia ./helm/ipt-s3`
