@@ -10,6 +10,7 @@ dir_map=(
     ["NHMO-DOT.zip"]="/srv/ipt/resources/o_dna_other/sources/"
     ["O-DP.zip"]="/srv/ipt/resources/o_dna_plants/sources/"
     ["NHMO-DMA.zip"]="/srv/ipt/resources/o_mammals/sources/"
+    ["NHMO-IN.zip"]="/srv/ipt/resources/nhmo-hm/sources/"
 )
 
 # For each key in the dir_map array
