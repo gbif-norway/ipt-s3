@@ -20,6 +20,11 @@ This builds images with tags:
 
 Then you can push them with `docker compose push`
 
+## To update the IPT
+1. Change the version number as desired in `ipt/Dockerfile`
+2. Build the image and push it (see above)
+3. Delete pod using `kubectl delete pod [ipt-podname]`
+
 ## Restore from a backup
 In our case, to retrieve a particular backup do the following:
 1. SSH into the NIRD server (login.nird-lmd.sigma2.no) using your meta credentials
