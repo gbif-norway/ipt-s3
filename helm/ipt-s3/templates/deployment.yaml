@@ -54,6 +54,11 @@ spec:
                 key: s3-secret-key
           - name: S3_ZIP_BUCKET_NAME
             value: {{ .Values.zipBucket }}
+          - name: DISCORD_WEBHOOK_URL
+            valueFrom:
+              secretKeyRef:
+                name: discord-webhook-url
+                key: webhook-url
         resources:
           limits:
             memory: 512Mi

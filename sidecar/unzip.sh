@@ -13,6 +13,14 @@ dir_map=(
     ["NHMO-IN.zip"]="/srv/ipt/resources/nhmo-hm/sources/"
 )
 
+send_to_discord() {
+    local message="$1"
+    local webhook_url=$DISCORD_WEBHOOK_URL # Use the environment variable
+    curl -H "Content-Type: application/json" \
+         -d "{\"content\": \"$message\"}" \
+         $webhook_url
+}
+
 # For each key in the dir_map array
 for zip_file in "${!dir_map[@]}"; do
     # Download the zip file
@@ -26,13 +34,17 @@ for zip_file in "${!dir_map[@]}"; do
         if [ $? -eq 0 ]; then
             echo "$(date '+%Y-%m-%d %T'): Successfully unzipped $zip_file to ${dir_map[$zip_file]}" >> /var/log/unzip.log
         else
-            echo "$(date '+%Y-%m-%d %T'): Failed to unzip $zip_file" >> /var/log/unzip.log
+            message="$(date '+%Y-%m-%d %T'): Failed to unzip $zip_file"
+            echo "$message" >> /var/log/unzip.log
+            send_to_discord "$message"
         fi
 
         # Remove the downloaded zip file
         rm "$zip_file"
     else
-        echo "$(date '+%Y-%m-%d %T'): Failed to download $zip_file" >> /var/log/unzip.log
+        message="$(date '+%Y-%m-%d %T'): Failed to download $zip_file"
+        echo "$message" >> /var/log/unzip.log
+        send_to_discord "$message"
     fi
 done
 echo "-----" >> /var/log/unzip.log
