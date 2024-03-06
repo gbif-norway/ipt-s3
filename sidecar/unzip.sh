@@ -32,7 +32,9 @@ for zip_file in "${!dir_map[@]}"; do
 
         # If the unzip was successful, log to /var/log/unzip.log
         if [ $? -eq 0 ]; then
-            echo "$(date '+%Y-%m-%d %T'): Successfully unzipped $zip_file to ${dir_map[$zip_file]}" >> /var/log/unzip.log
+            message="$(date '+%Y-%m-%d %T'): Successfully unzipped $zip_file to ${dir_map[$zip_file]}"
+            echo "$message" >> /var/log/unzip.log
+            send_to_discord "$message"
         else
             message="$(date '+%Y-%m-%d %T'): Failed to unzip $zip_file"
             echo "$message" >> /var/log/unzip.log
