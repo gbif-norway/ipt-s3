@@ -54,4 +54,7 @@ ipt.gbif.no
 ### Ukraine
 ukraine.ipt.gbif.no
 `helm upgrade --install ukraine ./helm/ipt-s3 --set persistentStorage=4Gi`
+### Test IPT
+test.ipt.gbif.no
+`helm upgrade --install test ./helm/ipt-s3`
 
