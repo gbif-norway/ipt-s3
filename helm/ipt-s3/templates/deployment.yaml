@@ -28,6 +28,8 @@ spec:
         ports:
         - containerPort: 8080
           name: {{ .Release.Name }}-ipt
+        - containerPort: 8000
+          name: debug
         volumeMounts:
         - name: pvc
           mountPath: /srv/ipt/

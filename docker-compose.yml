@@ -3,7 +3,7 @@ version: '3'
 services:
   ipt:
     build: ./ipt
-    image: gbifnorway/ipt-s3:latest
+    image: gbifnorway/ipt-s3:tomcat-debug
     platform: linux/amd64
     # Uncomment for local testing
     # volumes: 
@@ -11,7 +11,7 @@ services:
 
   ipt-sidecar:
     build: ./sidecar
-    image: gbifnorway/ipt-sidecar:latest
+    image: gbifnorway/ipt-sidecar:tomcat-debug
     platform: linux/amd64
     # Uncomment for local testing
     # env_file:

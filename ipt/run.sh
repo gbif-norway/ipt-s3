@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "Starting IPT!"
-catalina.sh run &
+export JPDA_ADDRESS=*:8000
+catalina.sh jpda run &
 tomcat_pid=$!
 echo "IPT started, copying over ojdbc8 driver"
 cp /root/ojdbc8.jar /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/ojdbc8.jar
