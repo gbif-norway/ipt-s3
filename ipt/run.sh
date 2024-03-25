@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Starting IPT!"
+export JPDA_ADDRESS=*:8000
 catalina.sh jpda run &
 tomcat_pid=$!
 echo "IPT started, copying over ojdbc8 driver"
