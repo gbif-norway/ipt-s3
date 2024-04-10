@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Increase maxParameterCount to 10000"
-sed -i 's/maxParameterCount="1000"/maxParameterCount="10000"/g' /usr/local/tomcat/server.xml
+sed -i 's/maxParameterCount="1000"/maxParameterCount="10000"/g' /usr/local/tomcat/conf/server.xml
 echo "Starting IPT!"
 catalina.sh run &
 tomcat_pid=$!
