@@ -35,27 +35,14 @@ In our case, to retrieve a particular backup do the following:
 6. Reset tomcat: `touch /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml`
 
 ## Individual deployments
-### Slovakia
-slovakia.ipt.gbif.no
-`helm upgrade --install slovakia ./helm/ipt-s3`
-pvc: `slovakia-pvc`
-### Corema
-corema.ipt.gbif.no
-`helm upgrade --install corema ./helm/ipt-s3 --set zipBucket="corema-exports/gbif",persistentStorage=2Gi`
-### Tajik
-tajik.ipt.gbif.no
-`helm upgrade --install tajik ./helm/ipt-s3 --set persistentStorage=1Gi`
-### Armenia
-armenia.ipt.gbif.no
-`helm upgrade --install armenia ./helm/ipt-s3`
-### Main IPT
+These are handled through our gitops at https://github.com/gbif-norway/gitops/tree/main/apps/ipt-s3
+
 ipt.gbif.no
-`helm upgrade --install main ./helm/ipt-s3 --set hostName=ipt.gbif.no,persistentStorage=20Gi`
-### Ukraine
 ukraine.ipt.gbif.no
-`helm upgrade --install ukraine ./helm/ipt-s3 --set persistentStorage=4Gi`
-### Test IPT
+slovakia.ipt.gbif.no
+corema.ipt.gbif.no
 test.ipt.gbif.no
-`helm upgrade --install test ./helm/ipt-s3`
-### From a specific tag, e.g. tomcat-debug
-`helm upgrade --install test ./helm/ipt-s3 --set containerImageTag=tomcat-debug`
+
+These two we should probably delete as they are more or less unused:
+tajik.ipt.gbif.no
+armenia.ipt.gbif.no
