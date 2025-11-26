@@ -11,6 +11,9 @@ dir_map=(
     ["O-DP.zip"]="/srv/ipt/resources/o_dna_plants/sources/"
     ["NHMO-DMA.zip"]="/srv/ipt/resources/o_mammals/sources/"
     ["NHMO-IN.zip"]="/srv/ipt/resources/nhmo-hm/sources/"
+    ["NHMO-FI.zip"]="/srv/ipt/resources/o_fish/sources/"
+    ["NHMO-AR.zip"]="/srv/ipt/resources/o_herptile/sources/"
+    ["NHMO-LO.zip"]="/srv/ipt/resources/o_lophophorate/sources/"
 )
 
 send_to_discord() {
@@ -28,6 +31,8 @@ for zip_file in "${!dir_map[@]}"; do
 
     # If the download was successful, unzip the file into the correct directory, overwriting any files with the same name there already
     if [ $? -eq 0 ]; then
+        # Create the target directory if it doesn't exist
+        mkdir -p "${dir_map[$zip_file]}"
         unzip -o "$zip_file" -d "${dir_map[$zip_file]}"
 
         # If the unzip was successful, log to /var/log/unzip.log
