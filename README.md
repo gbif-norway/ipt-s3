@@ -27,7 +27,7 @@ Then you can push them with `docker compose push`
 
 ## Restore from a backup
 In our case, to retrieve a particular backup do the following:
-1. SSH into the NIRD server (login.nird-lmd.sigma2.no) using your meta credentials
+1. SSH into the NIRD server (login.nird.sigma2.no) using your meta credentials
 2. Copy (using rsync, not cp) from the desired snapshot folder to a bucket folder. E.g. `rsync -av --delete /nird/projects/NS8095K/.snapshots/Sunday-07-May-2023/ipt-slovakia/ /nird/projects/NS8095K/ipt-slovakia/`
 3. SSH into the desired IPT pod on the cluster using kubectl
 4. Delete (or move) the contents of /srv/ipt so that /srv/ipt is empty
