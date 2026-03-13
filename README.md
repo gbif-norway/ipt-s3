@@ -7,7 +7,6 @@ IPT-S3 is a minimal extension of [GBIF](https://www.gbif.org)'s [IPT](https://hu
 * S3_HOST - Host url of the bucket
 * S3_ACCESS_KEY - Access Key for the bucket
 * S3_SECRET_KEY - Secret Access Key for the bucket
-* S3_ZIP_BUCKET_NAME - Optional. If there are DWCAs which need to regularly be synced to the IPT, this is that bucket name.
 
 ## Build image
 to build both ipt image and its sidecar, from the root of the repo, run:
