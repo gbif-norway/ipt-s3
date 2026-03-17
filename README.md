@@ -41,6 +41,3 @@ ukraine.ipt.gbif.no
 slovakia.ipt.gbif.no
 corema.ipt.gbif.no
 test.ipt.gbif.no
-
-These two we should probably delete as they are more or less unused:
-tajik.ipt.gbif.no
