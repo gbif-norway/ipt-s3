@@ -44,4 +44,3 @@ test.ipt.gbif.no
 
 These two we should probably delete as they are more or less unused:
 tajik.ipt.gbif.no
-armenia.ipt.gbif.no
