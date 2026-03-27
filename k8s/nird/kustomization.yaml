@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: gbif-no-ns8095k
+resources:
+  - 01-main.yaml
+  - 02-corema.yaml
+  - 03-slovakia.yaml
+  - 04-ukraine.yaml
