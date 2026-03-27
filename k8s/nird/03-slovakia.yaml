@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: slovakia-ipt
-          image: gbifnorway/ipt-s3:latest
+          image: gbifnorway/ipt-s3:3.2.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
