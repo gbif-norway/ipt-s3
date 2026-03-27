@@ -1,43 +1,78 @@
-# IPT-S3
+# IPT-S3 (NIRD)
 
-IPT-S3 is a minimal extension of [GBIF](https://www.gbif.org)'s [IPT](https://hub.docker.com/r/gbif/ipt/) image that backs up automatically to an S3 bucket storage. The image itself only contains extra driver for Oracle database (needed for our MUSIT integration). Secondary sidecar image adds automatic backups to minio bucket (NIRD storage). Sidecar container also runs miscellaneous scripts for individual integrations that don't like to behave nicely on their own and need access to the ipt storage directly (e.g. COREMA).
+This repository contains:
 
-## Required environmental variables
-* S3_BUCKET_NAME - Name of the bucket. IPT-S3 will try to create the bucket before using it.
-* S3_HOST - Host url of the bucket
-* S3_ACCESS_KEY - Access Key for the bucket
-* S3_SECRET_KEY - Secret Access Key for the bucket
+1. The `gbifnorway/ipt-s3` image build (`ipt/`).
+2. The live NIRD manifests for IPT deployments (`k8s/nird/`).
 
-## Build image
-to build both ipt image and its sidecar, from the root of the repo, run:
-```zsh
-docker compose build
+Current production hosts:
+
+- `ipt.gbif.no`
+- `corema.ipt.gbif.no`
+- `slovakia.ipt.gbif.no`
+- `ukraine.ipt.gbif.no`
+
+## Runtime Model
+
+- Platform: NIRD (`nird-lmd` context, namespace `gbif-no-ns8095k`)
+- App image: `gbifnorway/ipt-s3:<tag>`
+- Shared PVC: `573890b9-3346-4027-ab0c-22eec6dfd665` with per-release subPaths
+- No sidecar in production
+
+## Build and Push a New IPT Image
+
+1. Update base IPT version in `ipt/Dockerfile`:
+   - `FROM gbif/ipt:<version>`
+2. Build and push the image tag you want to deploy:
+
+```bash
+docker buildx build --platform linux/amd64 -t gbifnorway/ipt-s3:<tag> ./ipt --push
 ```
-This builds images with tags:
-- gbifnorway/ipt-sidecar:latest
-- gbifnorway/ipt-s3:latest
 
-Then you can push them with `docker compose push`
+Example:
 
-## To update the IPT
-1. Change the version number as desired in `ipt/Dockerfile`
-2. Build the image and push it (see above)
-3. Delete pod using `kubectl delete pod [ipt-podname]`
+```bash
+docker buildx build --platform linux/amd64 -t gbifnorway/ipt-s3:3.2.3 ./ipt --push
+```
 
-## Restore from a backup
-In our case, to retrieve a particular backup do the following:
-1. SSH into the NIRD server (login.nird-lmd.sigma2.no) using your meta credentials
-2. Copy (using rsync, not cp) from the desired snapshot folder to a bucket folder. E.g. `rsync -av --delete /nird/projects/NS8095K/.snapshots/Sunday-07-May-2023/ipt-slovakia/ /nird/projects/NS8095K/ipt-slovakia/`
-3. SSH into the desired IPT pod on the cluster using kubectl
-4. Delete (or move) the contents of /srv/ipt so that /srv/ipt is empty
-5. Copy from bucket to the local /srv/ipt: `s4cmd dsync --force --recursive --verbose --sync-check --num-threads=5 s3://$S3_BUCKET_NAME /srv/ipt --endpoint-url $S3_HOST`
-6. Reset tomcat: `touch /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml`
+## Deploy to NIRD
 
-## Individual deployments
-These are handled through our gitops at https://github.com/gbif-norway/gitops/tree/main/apps/ipt-s3
+1. Update image tags in:
+   - `k8s/nird/01-main.yaml`
+   - `k8s/nird/02-corema.yaml`
+   - `k8s/nird/03-slovakia.yaml`
+   - `k8s/nird/04-ukraine.yaml`
+2. Apply all IPT manifests:
 
-ipt.gbif.no
-ukraine.ipt.gbif.no
-slovakia.ipt.gbif.no
-corema.ipt.gbif.no
-test.ipt.gbif.no
+```bash
+kubectl --context nird-lmd apply -k k8s/nird
+```
+
+3. Wait for rollouts:
+
+```bash
+kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/main-ipt
+kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/corema-ipt
+kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/slovakia-ipt
+kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/ukraine-ipt
+```
+
+4. Verify running image tags:
+
+```bash
+kubectl --context nird-lmd -n gbif-no-ns8095k get deploy main-ipt corema-ipt slovakia-ipt ukraine-ipt \
+  -o jsonpath='{range .items[*]}{.metadata.name}{" => "}{.spec.template.spec.containers[0].image}{"\n"}{end}'
+```
+
+## Rollback
+
+```bash
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/main-ipt main-ipt=gbifnorway/ipt-s3:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/corema-ipt corema-ipt=gbifnorway/ipt-s3:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/slovakia-ipt slovakia-ipt=gbifnorway/ipt-s3:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/ukraine-ipt ukraine-ipt=gbifnorway/ipt-s3:<previous-tag>
+```
+
+## Notes
+
+- `k8s/nird/scripts/` contains historical migration helpers and is not required for routine deployments.
