@@ -28,7 +28,7 @@ Because we copy `/srv/ipt` from DO and keep the same hostnames, the registry and
 
 - Namespace: `gbif-no-ns8095k`
 - One deployment/service/ingress/networkpolicy per IPT
-- `replicas: 0` by default to prevent accidental startup/publication before cutover
+- `replicas: 1` to reflect current live state after cutover
 - Shared PVC claim mounted with per-release `subPath`:
   - `ipt-main`
   - `ipt-corema`
@@ -41,7 +41,7 @@ Current shared PVC claim in these manifests is:
 
 If this claim changes, update it in `01-main.yaml`, `02-corema.yaml`, `03-slovakia.yaml`, `04-ukraine.yaml`.
 
-## 1) Apply Manifests (Deployments Stay Scaled Down)
+## 1) Apply Manifests
 
 ```sh
 kubectl --context nird-lmd apply -k k8s/nird
