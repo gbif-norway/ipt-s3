@@ -49,10 +49,10 @@ spec:
           resources:
             limits:
               memory: 2Gi
-              cpu: "1.5"
+              cpu: "1"
             requests:
               memory: 1Gi
-              cpu: "0.75"
+              cpu: "0.5"
           volumeMounts:
             - name: ipt-data
               mountPath: /srv/ipt/
