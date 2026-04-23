@@ -32,7 +32,7 @@ docker buildx build --platform linux/amd64 -t gbifnorway/ipt-s3:<tag> ./ipt --pu
 Example:
 
 ```bash
-docker buildx build --platform linux/amd64 -t gbifnorway/ipt-s3:3.2.3 ./ipt --push
+docker buildx build --platform linux/amd64 -t gbifnorway/ipt-s3:3.3.1 ./ipt --push
 ```
 
 ## Deploy to NIRD
