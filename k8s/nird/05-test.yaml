@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: slovakia-ipt
+  name: test-ipt
   labels:
-    app: slovakia-ipt
+    app: test-ipt
 spec:
   strategy:
     type: Recreate
   replicas: 1
   selector:
     matchLabels:
-      app: slovakia-ipt
+      app: test-ipt
   template:
     metadata:
       labels:
-        app: slovakia-ipt
+        app: test-ipt
     spec:
       containers:
-        - name: slovakia-ipt
+        - name: test-ipt
           image: gbif/ipt:3.3.2
           imagePullPolicy: Always
           securityContext:
@@ -59,7 +59,7 @@ spec:
           volumeMounts:
             - name: ipt-data
               mountPath: /srv/ipt/
-              subPath: ipt-slovakia
+              subPath: ipt-test
       volumes:
         - name: ipt-data
           persistentVolumeClaim:
@@ -68,12 +68,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: slovakia-ipt
+  name: test-ipt
   labels:
-    app: slovakia-ipt
+    app: test-ipt
 spec:
   selector:
-    app: slovakia-ipt
+    app: test-ipt
   ports:
     - name: http
       port: 80
@@ -82,7 +82,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: slovakia-ipt
+  name: test-ipt
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
@@ -90,29 +90,29 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: slovakia.ipt.gbif.no
+    - host: test.ipt.gbif.no
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: slovakia-ipt
+                name: test-ipt
                 port:
                   number: 80
   tls:
     - hosts:
-        - slovakia.ipt.gbif.no
-      secretName: slovakia-ipt-cert
+        - test.ipt.gbif.no
+      secretName: test-ipt-cert
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: slovakia-ipt
+  name: test-ipt
 spec:
   podSelector:
     matchLabels:
-      app: slovakia-ipt
+      app: test-ipt
   policyTypes:
     - Ingress
   ingress:

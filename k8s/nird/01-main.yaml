@@ -18,8 +18,11 @@ spec:
     spec:
       containers:
         - name: main-ipt
-          image: gbifnorway/ipt-s3:3.3.1
+          image: gbif/ipt:3.3.2
           imagePullPolicy: Always
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
           ports:
             - containerPort: 8080
               name: http

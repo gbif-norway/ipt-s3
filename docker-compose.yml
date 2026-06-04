@@ -1,7 +1,6 @@
 services:
   ipt:
-    build: ./ipt
-    image: gbifnorway/ipt-s3:latest
+    image: gbif/ipt:3.3.2
     platform: linux/amd64
     # Uncomment for local testing
     # volumes: 
@@ -16,5 +15,4 @@ services:
     #   - .env
     # volumes:
     #   - ./data:/srv/ipt
-
 

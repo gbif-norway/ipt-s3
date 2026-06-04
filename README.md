@@ -1,9 +1,6 @@
 # IPT-S3 (NIRD)
 
-This repository contains:
-
-1. The `gbifnorway/ipt-s3` image build (`ipt/`).
-2. The live NIRD manifests for IPT deployments (`k8s/nird/`).
+This repository contains the live NIRD manifests for IPT deployments (`k8s/nird/`).
 
 Current production hosts:
 
@@ -12,36 +9,25 @@ Current production hosts:
 - `slovakia.ipt.gbif.no`
 - `ukraine.ipt.gbif.no`
 
+Test host:
+
+- `test.ipt.gbif.no`
+
 ## Runtime Model
 
 - Platform: NIRD (`nird-lmd` context, namespace `gbif-no-ns8095k`)
-- App image: `gbifnorway/ipt-s3:<tag>`
+- App image: `gbif/ipt:<tag>`
 - Shared PVC: `573890b9-3346-4027-ab0c-22eec6dfd665` with per-release subPaths
 - No sidecar in production
 
-## Build and Push a New IPT Image
-
-1. Update base IPT version in `ipt/Dockerfile`:
-   - `FROM gbif/ipt:<version>`
-2. Build and push the image tag you want to deploy:
-
-```bash
-docker buildx build --platform linux/amd64 -t gbifnorway/ipt-s3:<tag> ./ipt --push
-```
-
-Example:
-
-```bash
-docker buildx build --platform linux/amd64 -t gbifnorway/ipt-s3:3.3.1 ./ipt --push
-```
-
 ## Deploy to NIRD
 
-1. Update image tags in:
+1. Update IPT image tags in:
    - `k8s/nird/01-main.yaml`
    - `k8s/nird/02-corema.yaml`
    - `k8s/nird/03-slovakia.yaml`
    - `k8s/nird/04-ukraine.yaml`
+   - `k8s/nird/05-test.yaml`
 2. Apply all IPT manifests:
 
 ```bash
@@ -55,22 +41,24 @@ kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/main-ipt
 kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/corema-ipt
 kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/slovakia-ipt
 kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/ukraine-ipt
+kubectl --context nird-lmd -n gbif-no-ns8095k rollout status deploy/test-ipt
 ```
 
 4. Verify running image tags:
 
 ```bash
-kubectl --context nird-lmd -n gbif-no-ns8095k get deploy main-ipt corema-ipt slovakia-ipt ukraine-ipt \
+kubectl --context nird-lmd -n gbif-no-ns8095k get deploy main-ipt corema-ipt slovakia-ipt ukraine-ipt test-ipt \
   -o jsonpath='{range .items[*]}{.metadata.name}{" => "}{.spec.template.spec.containers[0].image}{"\n"}{end}'
 ```
 
 ## Rollback
 
 ```bash
-kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/main-ipt main-ipt=gbifnorway/ipt-s3:<previous-tag>
-kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/corema-ipt corema-ipt=gbifnorway/ipt-s3:<previous-tag>
-kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/slovakia-ipt slovakia-ipt=gbifnorway/ipt-s3:<previous-tag>
-kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/ukraine-ipt ukraine-ipt=gbifnorway/ipt-s3:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/main-ipt main-ipt=gbif/ipt:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/corema-ipt corema-ipt=gbif/ipt:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/slovakia-ipt slovakia-ipt=gbif/ipt:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/ukraine-ipt ukraine-ipt=gbif/ipt:<previous-tag>
+kubectl --context nird-lmd -n gbif-no-ns8095k set image deploy/test-ipt test-ipt=gbif/ipt:<previous-tag>
 ```
 
 ## Notes

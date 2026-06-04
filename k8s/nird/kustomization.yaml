@@ -6,3 +6,4 @@ resources:
   - 02-corema.yaml
   - 03-slovakia.yaml
   - 04-ukraine.yaml
+  - 05-test.yaml
